@@ -1,0 +1,28 @@
+<div class="rates-component">
+    <style>
+        table { font-size: 12px; font-weight: normal; border: 1px solid; }
+        tr td { padding: 1px; border: 1px solid; }
+        .hidden { display: none; }
+    </style>
+    <h2>Rates (base {{ data[0].base }}):</h2>
+    <span *ngFor="#item of show">
+        <label>
+            <input type="checkbox" [(ngModel)]="item.enable" (change)="toggleVisibility($event, item)">
+            {{ item.key }}
+        </label>
+    </span>
+    <table cellspacing="0" cellpadding="0">
+        <tr>
+            <th>Date</th>
+            <th *ngFor="#currency of getItemsTitles()" [ngClass]="{hidden: !getVisibility(currency) }">
+                <span>{{ currency }}</span>
+            </th>
+        </tr>
+        <tr *ngFor="#item of data; #i = index">
+            <td>{{item.date}}</td>
+            <td *ngFor="#currency of getItemsTitles()" [ngClass]="{hidden: !getVisibility(currency) }">
+                <span>{{ item.rates[currency] }}</span>
+            </td>
+        </tr>
+    </table>
+</div>
